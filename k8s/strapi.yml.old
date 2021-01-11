@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: strapi
+spec:
+  containers:
+    - name: hellix
+      image: nurielmeni/hellix:0.0.1
