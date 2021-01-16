@@ -1,0 +1,13 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: hellix_1
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Meni1971!
+    ports: 
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
