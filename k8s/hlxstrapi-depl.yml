@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hlxstrapi-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hlxstrapi
+  template:
+    metadata:
+      labels:
+        app: hlxstrapi
+    spec:
+      containers:
+        - name: hlxstrapi
+          image: nurielmeni/hlxstrapi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hlxstrapi-srv
+spec:
+  selector:
+    app: hlxstrapi
+  ports:
+    - name: hlxstrapi
+      protocol: TCP
+      port: 1337
+      targetPort: 1337
