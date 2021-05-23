@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hlxpg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hlxpg
+  template:
+    metadata:
+      labels:
+        app: hlxpg
+    spec:
+      containers:
+        - name: hlxpg
+          image: postgres
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: hlxpg-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: hlxpgdb
+      volumes:
+        - name: hlxpgdb
+          persistentVolumeClaim:
+            claimName: hlxpg-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hlxpg-srv
+spec:
+  selector:
+    app: hlxpg
+  ports:
+    - name: hlxpg
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

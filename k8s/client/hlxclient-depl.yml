@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hlxclient-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hlxclient
+  template:
+    metadata:
+      labels:
+        app: hlxclient
+    spec:
+      containers:
+        - name: hlxclient
+          image: nurielmeni/hlxclient
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hlxclient-srv
+spec:
+  selector:
+    app: hlxclient
+  ports:
+    - name: hlxclient
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
